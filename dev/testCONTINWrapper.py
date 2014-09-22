@@ -27,14 +27,14 @@ def testgenInputFile(templateFile):
 
 	paramList=readInputParamFromFile(templateFile)	
 
-	tp=trapLevel([0.1,0.05])
+	tp=trapLevel([0.06,0.1])
 
-	xdata,ydata=tp.getTransient(T=280,plotGraph=False,gridnum=100)
+	xdata,ydata=tp.getTransient(T=100,plotGraph=False,gridnum=100)
 
-	print tp.emRateT(280)
+	print tp.emRateT(100)
 
 	for idx,p in enumerate(paramList):
-		if p[0]=='GMNMX':
+		if p[0]=='GMNMX' and p[2]=='default':
 			if p[1]==1:
 				paramList[idx]=(p[0],p[1],defaultGMNMX1(xdata))
 			if p[2]==2:
@@ -67,9 +67,12 @@ if __name__=="__main__":
 #		plt.savefig("./output/test"+str(i)+".png")
 #		plt.close()
 	
-
+	plt.semilogx(np.array([ 9.46526508e-04, 9.46526508e-04]),np.array([0,2500]),hold=True,linestyle='--')
+	plt.semilogx(np.array([9.12475687e-06,9.12475687e-06]),np.array([0,2500]),hold=True,linestyle='--')
 	plt.xlabel("emission rate(s^-1)")
 	plt.ylabel("amplitude")
-	plt.savefig("./tmpoutput/test.png")
+	plt.savefig("./tmpoutput/test.pdf")
+	plt.show()
+	plt.close()
 	
 

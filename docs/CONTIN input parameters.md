@@ -28,6 +28,18 @@ IUSER(4): for selecting the built-in kernel function USERK
  5210 FORMAT (/1X,6A1,I5,1PE15.5) --> This format is for the same set of parameters in output file
 
 
+ORDINATE: xj or s(lambda)
+ABSCISSA: lambda
+
+IUSER(10)==1: molecular weight mode
+default: R23=1, R21=R18*R20^2
+
+IUSER(10)==2: Laplace transform
+default: R23=0, R22=1, R21=R20^2
+
+
+
+
 Hints for inverting noisy Laplace transforms:
 =============================================
 With Laplace inversions, you might use the following Control 
