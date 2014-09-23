@@ -1,3 +1,7 @@
 
 # ignore the temporary output files
 dev/tmpoutput/
+dev/output
+
+# ignore any pyc files
+*.pyc

@@ -16,63 +16,70 @@ testfile4="./tmpoutput/mySimulatedTest.out"
 
 
 def testreadblock():
-	data=readblock(open(testfile,'r'))
-	print data.shape
-	plt.semilogx(data[:,2],data[:,0])
-	plt.show()
+    data=readblock(open(testfile,'r'))
+    print data.shape
+    plt.semilogx(data[:,2],data[:,0])
+    plt.show()
 
 
-def testgenInputFile(templateFile):
-	
+def test_runCONFITfit_simData(templateFile,plotMode='each'):
+    
+    testTemperature=100
+    paramList=readInputParamFromFile(templateFile)  
 
-	paramList=readInputParamFromFile(templateFile)	
+    tp=trapLevel([0.06,0.1])
 
-	tp=trapLevel([0.06,0.1])
+    xdata,ydata=tp.getTransient(T=testTemperature,plotGraph=True,gridnum=100)
 
-	xdata,ydata=tp.getTransient(T=100,plotGraph=False,gridnum=100)
-
-	print tp.emRateT(100)
-
-	for idx,p in enumerate(paramList):
-		if p[0]=='GMNMX' and p[2]=='default':
-			if p[1]==1:
-				paramList[idx]=(p[0],p[1],defaultGMNMX1(xdata))
-			if p[2]==2:
-				paramList[idx]=(p[0],p[1],defaultGMNMX2(xdata))
+    emRates=tp.emRateT(testTemperature)
 
 
-	genInputFile('./tmpoutput/testout',paramList,(xdata,ydata))
+    alldata=runCONTINfit(xdata,ydata,templateFile)
 
-	runCONTIN('./tmpoutput/testout','./tmpoutput/mySimulatedTest.out')
+    if plotMode=='each':
+        for i,data in enumerate(alldata):
+            plt.semilogx(data[1][:,2],data[1][:,0],hold=True)
+            
+            for em in emRates:
+                plt.semilogx([em,em],[0,np.amax(data[1])],hold=True,linestyle='--')
+
+
+            plt.xlabel("emission rate(s^-1)")
+            plt.ylabel("amplitude")
+            plt.title("alpha %s"%data[0][1])
+            
+            plt.savefig("./tmpoutput/test"+str(i)+".png")
+
+
+            plt.close()
+    
+    elif plotMode=='merge':
+        for i,data in enumerate(alldata):
+            plt.semilogx(data[1][:,2],data[1][:,0],hold=True)
+        for em in emRates:
+            maxarr=[np.amax(d[1][:,0]) for d in alldata ]
+            plt.semilogx([em,em],[0,np.amax(maxarr)],hold=True,linestyle='--')     
+    
+        plt.xlabel("emission rate(s^-1)")
+        plt.ylabel("amplitude")
+        plt.savefig("./tmpoutput/test.pdf")
+        plt.show()
+        plt.close()
+
+
 
 
 def testgetParamString():
-	str1=' GMNMX     1   5.496109E-04'
-	str2=' GMNMX         8.573930E-01'
-	str3=" IFORMT\n (1E2.3)"
+    str1=' GMNMX     1   5.496109E-04'
+    str2=' GMNMX         8.573930E-01'
+    str3=" IFORMT\n (1E2.3)"
 
-	assert getParamString('GMNMX',1,5.496109E-04)==str1
-	assert getParamString('GMNMX',"",8.573930E-01)==str2
+    assert getParamString('GMNMX',1,5.496109E-04)==str1
+    assert getParamString('GMNMX',"",8.573930E-01)==str2
 
-	assert getParamString('IFORMT',"",'(1E2.3)')==str3
+    assert getParamString('IFORMT',"",'(1E2.3)')==str3
 
 if __name__=="__main__":
 
-	testgenInputFile('paramTemplate.txt')
-	alldata=readCONTINoutput(testfile4)
-
-	for i,data in enumerate(alldata):
-		plt.semilogx(data[:,2],data[:,0],hold=True)
-		
-#		plt.savefig("./output/test"+str(i)+".png")
-#		plt.close()
-	
-	plt.semilogx(np.array([ 9.46526508e-04, 9.46526508e-04]),np.array([0,2500]),hold=True,linestyle='--')
-	plt.semilogx(np.array([9.12475687e-06,9.12475687e-06]),np.array([0,2500]),hold=True,linestyle='--')
-	plt.xlabel("emission rate(s^-1)")
-	plt.ylabel("amplitude")
-	plt.savefig("./tmpoutput/test.pdf")
-	plt.show()
-	plt.close()
-	
+    test_runCONFITfit_simData('paramTemplate.txt',plotMode='merge')
 
