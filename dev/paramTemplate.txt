@@ -1,7 +1,7 @@
   TEST DATA SET 1 (inverse laplace transform)                             
 LAST,,1        
-GMNMX,1,1e-3                                             
-GMNMX,2,5e-1                                                
+GMNMX,1,5e-6                                             
+GMNMX,2,2e-1                                                
 IWT,,5                                                
 NERFIT,,0                                                
 NINTT,,-1

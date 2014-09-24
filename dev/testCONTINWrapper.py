@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os.path import join
 from CONTINWrapper import *
+from scipy.signal import argrelmax
 
 testfiledir='./output data for test/'
 
@@ -20,6 +21,38 @@ def testreadblock():
     print data.shape
     plt.semilogx(data[:,2],data[:,0])
     plt.show()
+
+def test_findextrema(templateFile):
+
+    testTemperature=100
+    paramList=readInputParamFromFile(templateFile)  
+
+    tp=trapLevel([0.06,0.1])
+
+    xdata,ydata=tp.getTransient(T=testTemperature,plotGraph=True,gridnum=100)
+
+    emRates=tp.emRateT(testTemperature)
+
+
+    alldata=runCONTINfit(xdata,ydata,templateFile)
+
+    testxdata=alldata[0][1][:,2]
+
+    testydata=alldata[0][1][:,0]
+
+    relMaxIdx=argrelmax(testydata)
+
+    plt.semilogx(testxdata,testydata,hold=True)
+
+    plt.show()
+
+    plt.close()
+
+    print testxdata[relMaxIdx[0]]
+    print testydata[relMaxIdx[0]]
+
+
+
 
 
 def test_runCONFITfit_simData(templateFile,plotMode='each'):
@@ -81,5 +114,6 @@ def testgetParamString():
 
 if __name__=="__main__":
 
-    test_runCONFITfit_simData('paramTemplate.txt',plotMode='merge')
+    #test_runCONFITfit_simData('paramTemplate.txt',plotMode='merge')
+    test_findextrema('paramTemplate.txt')
 

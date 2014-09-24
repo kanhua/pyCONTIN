@@ -34,6 +34,7 @@ def testExperimentFile(templateFile):
         plt.close()
 
 
+
 if __name__=="__main__":
-    testgenInputFile('paramTemplate.txt')
-    #testExperimentFile('paramTemplate.txt');
+    #testgenInputFile('paramTemplate.txt')
+    testExperimentFile('paramTemplate.txt');
