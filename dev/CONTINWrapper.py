@@ -1,5 +1,5 @@
-from DLTSsimulator import *
 from string import split
+import numpy as np
 import os
 import re
 
@@ -12,10 +12,19 @@ def runCONTINfit(xdata,ydata, parameterFile, continInputFile=None, continOutputF
         continOutputFile: input file for CONTIN main program, set None if use default dummpy output file
     """
 
+    # Retrieve the current directory
+    thisDir = os.path.split(__file__)[0]
+
+    originalDir=os.getcwd()
+
+    os.chdir(thisDir)
+
+
     if continInputFile==None:
-        continInputFile='./tmpoutput/dummyInput.txt'
+        continInputFile="CONTINInput.txt"
+        print "continInputFile", continInputFile
     if continOutputFile==None:
-        continOutputFile='./tmpoutput/dummyOutput.txt'    
+        continOutputFile="CONTINOutput.txt"
 
 
     paramList=readInputParamFromFile(parameterFile)  
@@ -32,10 +41,11 @@ def runCONTINfit(xdata,ydata, parameterFile, continInputFile=None, continOutputF
 
     runCONTIN(continInputFile,continOutputFile)
 
-    testfile4=continOutputFile
 
-    alldata=readCONTINoutput(testfile4)
+    alldata=readCONTINoutput(continOutputFile)
 
+
+    os.chdir(originalDir)
     return alldata
 
 
@@ -211,8 +221,10 @@ def readCONTINoutput(filename):
 
 def runCONTIN(inputFile,outputFile):
 
+
     execFile='../exec/CONTIN.out'
 
+ 
     fullcommand=execFile+" < "+inputFile+" > "+outputFile;
 
     os.system(fullcommand)

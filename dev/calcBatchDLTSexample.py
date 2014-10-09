@@ -22,7 +22,7 @@ templateFile='paramTemplate.txt'
 testTemperature=100
 paramList=readInputParamFromFile(templateFile)  
 
-tp=trapLevel([0.06,0.1])
+tp=trapLevel([0.08,0.1])
 
 temperaturesForGrpahOutput=np.linspace(100,300,10)
 

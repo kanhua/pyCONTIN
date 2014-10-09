@@ -11,7 +11,9 @@ IUSER(4): for selecting the built-in kernel function USERK
 4: general form of kernel, need to modify the code of this part by the user (LINE 881)
 
 
+ ```fortran
  USERK(T,G)=FORMF2(G)*G**RUSER(23)*EXP(-RUSER(21)*T*G**RUSER(22))
+ ```
 
 
  NY format:
@@ -32,14 +34,25 @@ ORDINATE: xj or s(lambda)
 ABSCISSA: lambda
 
 IUSER(10)==1: molecular weight mode
-default: R23=1, R21=R18*R20^2
+default: ```R23=1, R21=R18*R20^2```
 
 IUSER(10)==2: Laplace transform
-default: R23=0, R22=1, R21=R20^2
+default: ```R23=0, R22=1, R21=R20^2```
+
+# Contraint the solution
+
+1. Setting the number of peaks. See 4.1.6.4 of the manual or 4.7 in the main paper. Six parameters are for this: ```NNSGN```, ```NSGN```, ```LSIGN```, ```NFLAT```, ```SRMIN```, and ```MQPITR```.
+
+2. Set quality and equality constraints. (see. CONTIN manual 4.1.2.5 and 4.1.2.6)
+NEQ can be set in the setting FILE. But the matrix D, E in Eq. 3.6 and 3.7 should be set in the source code.
+
+3. Set the weighting of each input data points using ```IWT```, or using ```IWT=4``` to manually set each point.
 
 
 
-
+# Hints for inverting noisy Laplace tranforms
+Hints for inverting noisy Laplace transforms described in the original source code.
+```
 Hints for inverting noisy Laplace transforms:
 =============================================
 With Laplace inversions, you might use the following Control 
@@ -69,3 +82,4 @@ Choose the solution with the smallest ALPHA that has the same
   less smoothing bias (smaller ALPHA), but still has about 
   the same complexity (number of peaks) as the CHOSEN SOLUTION.
 =================================================================
+```
