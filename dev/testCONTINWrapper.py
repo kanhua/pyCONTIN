@@ -114,6 +114,6 @@ def testgetParamString():
 
 if __name__=="__main__":
 
-    #test_runCONFITfit_simData('paramTemplate.txt',plotMode='merge')
-    test_findextrema('paramTemplate.txt')
+    test_runCONFITfit_simData('paramTemplate.txt',plotMode='merge')
+    #test_findextrema('paramTemplate.txt')
 

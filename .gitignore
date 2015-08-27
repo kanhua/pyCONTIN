@@ -2,6 +2,7 @@
 # ignore the temporary output files
 dev/tmpoutput/
 dev/output
-
+.idea/
+.ipynb_checkpoints/
 # ignore any pyc files
 *.pyc

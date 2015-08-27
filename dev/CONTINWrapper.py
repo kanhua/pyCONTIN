@@ -1,7 +1,10 @@
-from string import split
+from __future__ import print_function
 import numpy as np
 import os
 import re
+
+
+CONTINPath='../exec/CONTIN.out'
 
 
 def runCONTINfit(xdata,ydata, parameterFile, continInputFile=None, continOutputFile=None):
@@ -22,7 +25,7 @@ def runCONTINfit(xdata,ydata, parameterFile, continInputFile=None, continOutputF
 
     if continInputFile==None:
         continInputFile="CONTINInput.txt"
-        print "continInputFile", continInputFile
+        print ("continInputFile", continInputFile)
     if continOutputFile==None:
         continOutputFile="CONTINOutput.txt"
 
@@ -92,7 +95,7 @@ def getParamString(paramName, arrayIndex, paramValue):
     
     
     if printGauge==True:
-        print "12345612345123456789012345"
+        print("12345612345123456789012345")
 
 
     return fullStr
@@ -150,7 +153,7 @@ def readInputParamFromFile(templateFile):
 
     paramList=[]
     for line in infile:
-        tmpParam=split(line,sep=",")
+        tmpParam=line.split(",")
         if tmpParam[1] is not "":
             tmpParam[1]=int(tmpParam[1])
         if tmpParam[0] not in formatSpecParam:
@@ -222,7 +225,7 @@ def readCONTINoutput(filename):
 def runCONTIN(inputFile,outputFile):
 
 
-    execFile='../exec/CONTIN.out'
+    execFile=CONTINPath
 
  
     fullcommand=execFile+" < "+inputFile+" > "+outputFile;
