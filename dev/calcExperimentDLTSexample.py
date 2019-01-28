@@ -2,7 +2,7 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 from os.path import join
-from CONTINWrapper import *
+from CONTINWrapper import runCONTINfit
 from capFileUtil import capTime
 
 
