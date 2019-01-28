@@ -4,7 +4,7 @@ CONTIN package is a Fortran77 program for solving Fredelhom equations of the fir
 
 Currently this wrapper generates the input file for CONTIN main program, and then parse the output of the CONTIN main program.
 
-[Official webpage of CONTIN](http://s-provencher.com/pages/contin.shtml)
+[Official webpage of CONTIN](http://lcmodel.ca/contin.shtml)
 
 ## How does the program work
 

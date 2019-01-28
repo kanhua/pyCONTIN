@@ -17,9 +17,9 @@ fp = open("paramTemplate.txt", 'r')
 
 alldata = runCONTINfit(trans_data[:, 0], trans_data[:, 1], template_file)
 
-testxdata = alldata[0][1][:, 2]
+testxdata = alldata[2][1][:, 2]
 
-testydata = alldata[0][1][:, 0]
+testydata = alldata[2][1][:, 0]
 
 plt.plot(testxdata, testydata)
 
