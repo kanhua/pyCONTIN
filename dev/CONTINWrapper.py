@@ -3,7 +3,10 @@ import numpy as np
 import os
 import re
 
-CONTINPath = '/Users/kanhua/Dropbox/Programming/pyCONTIN/exec/contin.out'
+file_path = os.path.abspath(os.path.dirname(__file__))
+fhead, ftail = os.path.split(file_path)
+
+CONTINPath = os.path.join(fhead, 'exec/contin.out')
 
 
 def runCONTINfit(xdata, ydata, parameterFile, continInputFile=None, continOutputFile=None):

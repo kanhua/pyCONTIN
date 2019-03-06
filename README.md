@@ -34,7 +34,6 @@ gfortran -std=legacy contin.for -o contin.out
 ```
 - Change ```CONTINPath``` variable at the beginning of ```CONTINWrapper.py``` to the path your fortran executable ```contin.out```. The path can be set as the relative path to the path of ```CONTINWrapper.py```
 
-At the moment, this program only supports python 2.7
 
 
 ## Usage
@@ -64,3 +63,6 @@ PyCONTIN parses these output blocks and returns a list of tuples like this:
 
 For example script, see ```./dev/pyCONTIN_demo.py```
 
+## Python version
+
+python3

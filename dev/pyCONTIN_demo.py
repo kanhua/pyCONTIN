@@ -3,7 +3,7 @@
 # Load the required packages
 import numpy as np
 import matplotlib.pyplot as plt
-from CONTINWrapper import *
+from CONTINWrapper import runCONTINfit
 
 # #### Load example transient file
 
